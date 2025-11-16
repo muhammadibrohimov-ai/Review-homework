@@ -106,4 +106,14 @@ class ProductDetail(RetrieveAPIView):
     search_fields = ['name', 'category__name', 'price', 'quantity']
 
 
-class 
+class ProductUpdate(UpdateAPIView):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+
+class ProductDelete(DestroyAPIView):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
