@@ -9,10 +9,12 @@ class ProductSerializer(serializers.ModelSerializer):
         queryset = Categories.objects.all()
     )
     
+    category_name = serializers.CharField(source = 'category.name', read_only = True)
+    
     class Meta:
         model = Products
-        fields = ['id', 'name', 'desc', 'image', 'quantity', 'category', 'updated_at', 'created_at']
-        read_only_fields = ['id', 'updated_at', 'created_at',]
+        fields = ['id', 'name', 'desc', 'image', 'quantity', 'category', 'updated_at', 'created_at', 'category_name']
+        read_only_fields = ['id', 'updated_at', 'created_at', 'category_name']
         
     def validate(self, attrs):
         name = attrs.get('name', '').lower().strip()
@@ -29,6 +31,7 @@ class ProductSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("The product with this name already exists!")
 
         return attrs
+    
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -57,4 +60,4 @@ class CategorySerializer(serializers.ModelSerializer):
         return attrs
     
 
-    
+
