@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
     'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
     'django_filters',
     'main',
     'accounts',
@@ -101,6 +103,26 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+    ]
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {                   # Name shown in Swagger UI
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',  # Header name
+            'description': "JWT Authorization header. Format: `Bearer <access_token>`"
+        }
+    }
+}
+
 
 
 # Internationalization
